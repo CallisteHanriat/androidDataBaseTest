@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.allPersons.add(MainActivity.this.allPersonTest.get(randomNum));
                 Toast.makeText(getApplicationContext(), MainActivity.this.allPersonTest.get(randomNum).getName() + " selected", Toast.LENGTH_SHORT).show();
                 MainActivity.this.listPerson.setAdapter(MainActivity.this.adapter);
+                MainActivity.this.personDAO.insertPersonIntoDataBase(MainActivity.this.allPersonTest.get(randomNum));
             }
         });
     }
