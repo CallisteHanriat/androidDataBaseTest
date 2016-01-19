@@ -16,12 +16,12 @@ public class DataHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DROPTABLE = "DROP TABLE IF EXISTS ";
 
-    private static final String DATABASE_CREATE = "CREATE TABLE " + PERSON + "vlues ("+
+    private static final String DATABASE_CREATE = "CREATE TABLE " + PERSON + " ("+
             NAME + " TEXT primary key, " +
             SURNAME + " TEXT);";
 
     public DataHandler(Context c) {
-        super(c, PERSON, null, DATABASE_VERSION);
+        super(c, DBNAME, null, DATABASE_VERSION);
     }
 
     @Override

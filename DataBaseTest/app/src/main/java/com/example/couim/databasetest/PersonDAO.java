@@ -4,10 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by couim on 19/01/16.
@@ -21,7 +23,7 @@ public class PersonDAO {
         dataHandler = new DataHandler(context);
     }
 
-    public void open() throws SQLException{
+    public void open(){
         database = dataHandler.getWritableDatabase();
     }
 
@@ -41,7 +43,7 @@ public class PersonDAO {
         return p;
     }
 
-    public void insertPerson(Person p) {
+    public void insertPersonIntoDataBase(Person p) {
         try {
             database.beginTransaction();
             ContentValues values = new ContentValues();
@@ -55,5 +57,19 @@ public class PersonDAO {
         } catch (Exception e) {
             Log.e("insertion Bug", "Bug for insertion of a personage");
         }
+    }
+
+    public ArrayList<Person> findAllPersons() {
+        Cursor cursor = database.rawQuery("Select * from PERSON", null);
+        ArrayList<Person> allPers = new ArrayList<Person>();
+
+        if(cursor.getCount() == 0)
+            return null;
+        cursor.moveToFirst();
+        for(int i=0; i<cursor.getCount(); i++) {
+            Person p = new Person(cursor.getString(0), cursor.getString(1));
+            allPers.add(p);
+        }
+        return allPers;
     }
 }

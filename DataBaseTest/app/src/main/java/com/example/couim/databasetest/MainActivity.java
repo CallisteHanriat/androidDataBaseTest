@@ -8,9 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    private ListView listPerson;
+    private Adapter adapter;
+    private ArrayList<Person> allPersons;
+    private PersonDAO personDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,11 +26,28 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        this.personDAO = new PersonDAO(this.getApplicationContext());
+        this.personDAO.open();
+        this.allPersons = this.personDAO.findAllPersons();
+
+
+
+        if(this.allPersons == null) {
+            Toast.makeText(getApplicationContext(), "dataBase empty", Toast.LENGTH_SHORT).show();
+        } else {
+            this.adapter = new Adapter(getBaseContext(), this.allPersons);
+            this.listPerson = (ListView) findViewById(R.id.list_person);
+            this.listPerson.setAdapter(this.adapter);
+        }
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+
             }
         });
     }
@@ -48,5 +72,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        this.personDAO.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        this.personDAO.close();
+        super.onPause();
     }
 }
