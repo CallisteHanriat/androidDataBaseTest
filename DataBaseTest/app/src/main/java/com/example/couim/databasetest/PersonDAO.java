@@ -50,12 +50,15 @@ public class PersonDAO {
             values.put(DataHandler.NAME, p.getName());
             values.put(DataHandler.SURNAME, p.getSurname());
             database.insert("Person", null, values);
-            database.endTransaction();
+            database.setTransactionSuccessful();
+
 
             System.out.println("Insertion réussite");
             Log.d("GOOD", "Insertin réussite");
         } catch (Exception e) {
             Log.e("insertion Bug", "Bug for insertion of a personage");
+        } finally {
+            database.endTransaction();
         }
     }
 
@@ -66,10 +69,12 @@ public class PersonDAO {
         if(cursor.getCount() == 0)
             return null;
         cursor.moveToFirst();
-        for(int i=0; i<cursor.getCount(); i++) {
+
+        while(cursor.moveToNext()) {
             Person p = new Person(cursor.getString(0), cursor.getString(1));
             allPers.add(p);
         }
-        return allPers;
+
+        return (allPers.isEmpty() ? null : allPers);
     }
 }

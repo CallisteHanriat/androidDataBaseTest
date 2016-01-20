@@ -36,11 +36,18 @@ public class MainActivity extends AppCompatActivity {
 
         if(this.allPersons == null) {
             Toast.makeText(getApplicationContext(), "dataBase empty", Toast.LENGTH_SHORT).show();
+            this.allPersons = new ArrayList<Person>();
         }
 
-        this.allPersons = new ArrayList<Person>();
+
         this.adapter = new Adapter(getBaseContext(), this.allPersons);
         this.listPerson = (ListView) findViewById(R.id.list_person);
+
+        Log.d("Value of allPerson.size ", Integer.toString(allPersons.size()));
+        for(int i = 0; i<allPersons.size(); i++) {
+            System.out.println("Contient : " + allPersons.get(i).getName());
+        }
+
         this.listPerson.setAdapter(this.adapter);
 
         allPersonTest = new ArrayList<Person>();
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.personDAO.insertPersonIntoDataBase(MainActivity.this.allPersonTest.get(randomNum));
             }
         });
+
     }
 
     @Override
