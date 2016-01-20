@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by couim on 19/01/16.
@@ -76,5 +77,14 @@ public class PersonDAO {
         }
 
         return (allPers.isEmpty() ? null : allPers);
+    }
+
+    public boolean dropAllPersonDB() {
+        try {
+            database.execSQL("Delete from Person");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

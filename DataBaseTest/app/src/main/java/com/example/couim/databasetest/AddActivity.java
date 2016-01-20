@@ -28,8 +28,8 @@ public class AddActivity extends AppCompatActivity {
         ajoute.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
-                  personDAO.insertPersonIntoDataBase(new Person(nom.getEditableText().toString(), prenom.getEditableText().toString()));
-                  Toast.makeText(AddActivity.this, prenom.getEditableText().toString(), Toast.LENGTH_SHORT).show();
+                  personDAO.insertPersonIntoDataBase(new Person(nom.getText().toString(), prenom.getText().toString()));
+                  Toast.makeText(AddActivity.this, prenom.getText().toString(), Toast.LENGTH_SHORT).show();
               }
           }
 

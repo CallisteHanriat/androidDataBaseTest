@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         update();
 
-
         allPersonTest = new ArrayList<Person>();
         allPersonTest.add(new Person("Sebastien", "Patrick"));
         allPersonTest.add(new Person("Lagneux", "Nicolas"));
@@ -68,10 +67,22 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(getApplicationContext(), "TEST", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (id==R.id.action_drop) {
+            dropDb();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void dropDb() {
+        if(personDAO.dropAllPersonDB()) {
+            Toast.makeText(getApplicationContext(), "dataBase Deleted", Toast.LENGTH_SHORT).show();
+            update();
+        }
     }
 
     public void update() {

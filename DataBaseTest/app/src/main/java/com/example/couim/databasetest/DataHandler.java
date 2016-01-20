@@ -14,9 +14,9 @@ public class DataHandler extends SQLiteOpenHelper {
 
     private static final String DBNAME = "person.db";
     private static final int DATABASE_VERSION = 1;
-    private static final String DROPTABLE = "DROP TABLE IF EXISTS ";
+    public static final String DROPTABLE = "DROP TABLE IF EXISTS " + PERSON + ";";
 
-    private static final String DATABASE_CREATE = "CREATE TABLE " + PERSON + " ("+
+    public static final String DATABASE_CREATE = "CREATE TABLE " + PERSON + " ("+
             NAME + " TEXT primary key, " +
             SURNAME + " TEXT);";
 
