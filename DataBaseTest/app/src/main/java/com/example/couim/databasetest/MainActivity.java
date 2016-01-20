@@ -1,5 +1,6 @@
 package com.example.couim.databasetest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -32,23 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         this.personDAO = new PersonDAO(this.getApplicationContext());
         this.personDAO.open();
-        this.allPersons = this.personDAO.findAllPersons();
 
-        if(this.allPersons == null) {
-            Toast.makeText(getApplicationContext(), "dataBase empty", Toast.LENGTH_SHORT).show();
-            this.allPersons = new ArrayList<Person>();
-        }
+        update();
 
-
-        this.adapter = new Adapter(getBaseContext(), this.allPersons);
-        this.listPerson = (ListView) findViewById(R.id.list_person);
-
-        Log.d("Value of allPerson.size ", Integer.toString(allPersons.size()));
-        for(int i = 0; i<allPersons.size(); i++) {
-            System.out.println("Contient : " + allPersons.get(i).getName());
-        }
-
-        this.listPerson.setAdapter(this.adapter);
 
         allPersonTest = new ArrayList<Person>();
         allPersonTest.add(new Person("Sebastien", "Patrick"));
@@ -59,21 +46,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Random nb = new Random();
-                int n = 4 - 0 + 1;
-                int i = nb.nextInt()%n;
-                int randomNum = 0+i;
-                if (randomNum < 0)
-                    randomNum = -randomNum;
-                System.out.println("randomNum value : " + randomNum);
-                Log.d("randomNum value : ", Integer.toString(randomNum));
-                MainActivity.this.allPersons.add(MainActivity.this.allPersonTest.get(randomNum));
-                Toast.makeText(getApplicationContext(), MainActivity.this.allPersonTest.get(randomNum).getName() + " selected", Toast.LENGTH_SHORT).show();
-                MainActivity.this.listPerson.setAdapter(MainActivity.this.adapter);
-                MainActivity.this.personDAO.insertPersonIntoDataBase(MainActivity.this.allPersonTest.get(randomNum));
+                Intent intent = new Intent(getApplicationContext(), AddActivity.class);
+                startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -98,9 +74,24 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void update() {
+        this.allPersons = this.personDAO.findAllPersons();
+
+        if(this.allPersons == null) {
+            Toast.makeText(getApplicationContext(), "dataBase empty", Toast.LENGTH_SHORT).show();
+            this.allPersons = new ArrayList<Person>();
+        }
+
+        this.adapter = new Adapter(getBaseContext(), this.allPersons);
+        this.listPerson = (ListView) findViewById(R.id.list_person);
+        this.listPerson.setAdapter(this.adapter);
+
+    }
+
     @Override
     protected void onResume() {
         this.personDAO.open();
+        update();
         super.onResume();
     }
 

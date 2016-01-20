@@ -23,8 +23,7 @@
             android:layout_height="fill_parent"
             android:layout_below="@+id/namePerson"
             android:maxLines="1"
-            android:textSize="15sp"
-            android:layout_toRightOf="@+id/namePerson" />
+            android:textSize="15sp" />
 
     </RelativeLayout>
 </LinearLayout>
