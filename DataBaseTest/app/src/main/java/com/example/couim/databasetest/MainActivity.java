@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dropDb() {
-        if(personDAO.dropAllPersonDB()) {
+        if(personDAO.deleteAllPersonDB()) {
             Toast.makeText(getApplicationContext(), "dataBase Deleted", Toast.LENGTH_SHORT).show();
             update();
         }

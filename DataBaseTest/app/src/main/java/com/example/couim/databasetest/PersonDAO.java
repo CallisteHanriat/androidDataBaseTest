@@ -67,19 +67,21 @@ public class PersonDAO {
         Cursor cursor = database.rawQuery("Select * from PERSON", null);
         ArrayList<Person> allPers = new ArrayList<Person>();
 
-        if(cursor.getCount() == 0)
+        if(cursor.getCount() == 0) {
             return null;
+        }
         cursor.moveToFirst();
 
-        while(cursor.moveToNext()) {
+        do {
             Person p = new Person(cursor.getString(0), cursor.getString(1));
             allPers.add(p);
-        }
+        } while(cursor.moveToNext());
 
+        Log.d("Etat  ", "testOfallPersEmty  :  " + allPers.isEmpty());
         return (allPers.isEmpty() ? null : allPers);
     }
 
-    public boolean dropAllPersonDB() {
+    public boolean deleteAllPersonDB() {
         try {
             database.execSQL("Delete from Person");
             return true;
