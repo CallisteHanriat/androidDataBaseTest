@@ -9,7 +9,7 @@ import android.widget.NumberPicker;
 
 public class Exercice5Activity extends AppCompatActivity {
 
-    public static final String MULTIPLE_CHOOSE = "table_choisie";
+    public final static String MULTIPLE_CHOOSE = "table_choisie";
     private NumberPicker numberPicker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
